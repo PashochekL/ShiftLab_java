@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -587,6 +588,59 @@ public class SellerServiceTest {
     void testHandleQuarter_StartOfYear() {
         LocalDate date = LocalDate.of(2024, 1, 1);
         sellerService.handleQuarter(date);
+    }
+
+    @Test
+    public void testFindMostProductiveSellerByDate_MultipleSellersSameAmount() {
+        LocalDate date = LocalDate.of(2024, 10, 21);
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = date.plusDays(1).atStartOfDay();
+
+        Seller seller1 = new Seller(1L, "John Doe", "john.doe@example.com");
+        Seller seller2 = new Seller(2L, "Jane Doe", "jane.doe@example.com");
+        BigDecimal amount = new BigDecimal(100);
+
+        Object[] result1 = new Object[]{seller1, amount};
+        Object[] result2 = new Object[]{seller2, amount};
+        List<Object[]> results = Arrays.asList(result1, result2);
+
+        when(sellerRepository.findSellersByTotalTransactionAmountForPeriod(startDate, endDate))
+                .thenReturn(results);
+
+        SellerService sellerService = new SellerService(sellerRepository);
+
+        List<Seller> mostProductiveSellers = sellerService.findMostProductiveSellerByDate(date);
+
+        assertTrue(mostProductiveSellers.size() <= 2, "Размер списка результатов должен быть меньше или равен 2");
+        assertTrue(mostProductiveSellers.contains(seller1), "Список результатов должен содержать продавца seller1");
+        assertTrue(mostProductiveSellers.contains(seller2), "Список результатов должен содержать продавца seller2");
+    }
+
+    @Test
+    public void testFindMostProductiveSellerByDate_MultipleTransactions() {
+        LocalDate date = LocalDate.of(2024, 10, 21);
+        LocalDateTime startDate = date.atStartOfDay();
+        LocalDateTime endDate = date.plusDays(1).atStartOfDay();
+
+        Seller seller1 = new Seller(1L, "John Doe", "john.doe@example.com");
+        Seller seller2 = new Seller(2L, "Jane Doe", "jane.doe@example.com");
+        BigDecimal amount1 = new BigDecimal(100);
+        BigDecimal amount2 = new BigDecimal(200);
+
+        Object[] result1 = new Object[]{seller1, amount1};
+        Object[] result2 = new Object[]{seller2, amount2};
+        List<Object[]> results = Arrays.asList(result1, result2);
+
+        when(sellerRepository.findSellersByTotalTransactionAmountForPeriod(startDate, endDate))
+                .thenReturn(results);
+
+        SellerService sellerService = new SellerService(sellerRepository);
+
+        List<Seller> mostProductiveSellers = sellerService.findMostProductiveSellerByDate(date);
+
+        assertTrue(mostProductiveSellers.size() >= 1, "Список должен содержать как минимум одного продавца");
+        assertTrue(mostProductiveSellers.contains(seller1), "Список должен содержать продавца seller1");
+        assertTrue(mostProductiveSellers.contains(seller2), "Список должен содержать продавца seller2");
     }
 }
 

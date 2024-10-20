@@ -39,6 +39,9 @@ public class Seller {
         this.registrationDate = LocalDateTime.now();
     }
 
+    public Seller(long l, String johnDoe, String mail) {
+    }
+
     @Override
     public String toString() {
         return "Seller{" +
