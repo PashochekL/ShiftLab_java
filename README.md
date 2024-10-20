@@ -61,3 +61,39 @@ jdbc:h2:mem:ShiftDB
 Отчет будет находиться в папке: 
 
 build/reports/tests/test/index.html
+
+## Swagger:
+
+После запуска проекта, вы можете увидеть визуальное представление моего REST API
+
+Откройте его по ссылке: http://localhost:8080/swagger-ui/index.html
+
+### POST-запросы:
+
+1. Добавить продавца: http://localhost:8080/swagger-ui/index.html#/Sellers/addSeller
+
+2. Добавить транзакцию: http://localhost:8080/swagger-ui/index.html#/Transactions/addTransaction
+
+3. Получить самого продуктивного продавца: http://localhost:8080/swagger-ui/index.html#/Sellers/getMostProductiveSeller
+
+4. Получить продавцов с мин. продажей: http://localhost:8080/swagger-ui/index.html#/Sellers/getSellersWithMinAmount
+
+### GET-запросы:
+
+1. Получить продавца: http://localhost:8080/swagger-ui/index.html#/Sellers/getSeller
+
+2. Получить всех продавцов: http://localhost:8080/swagger-ui/index.html#/Sellers/getAllSeller
+
+3. Получить транзакцию: http://localhost:8080/swagger-ui/index.html#/Transactions/getTransaction
+
+4. Получить все транзакции конкретного продавца: http://localhost:8080/swagger-ui/index.html#/Transactions/getAllSellerTransactions
+
+5. Получить все транзакции: http://localhost:8080/swagger-ui/index.html#/Transactions/getAllTransaction
+
+### PUT-запросы:
+
+1. Обновить информацию о продавце: http://localhost:8080/swagger-ui/index.html#/Sellers/updateSeller
+
+### DELETE-запросы:
+
+1. Удалить продавца: http://localhost:8080/swagger-ui/index.html#/Sellers/deleteSeller
