@@ -28,7 +28,7 @@ public class TransactionController {
     public final TransactionService transactionService;
     public final SellerService sellerService;
 
-    @Operation(summary = "Добавить новую транзакцию")
+    @Operation(summary = "Add a new transaction")
     @PostMapping("/add/{id}")
     public ResponseEntity<Transaction> addTransaction(@PathVariable Long id, @RequestBody TransactionDTO transactionDTO) {
         Seller seller = sellerService.getSellerById(id)
@@ -45,7 +45,7 @@ public class TransactionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedTransaction);
     }
 
-    @Operation(summary = "Получить транзакцию по ID")
+    @Operation(summary = "Get transaction by ID")
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransaction(@PathVariable Long id) {
         Transaction transaction = transactionService.getTransactionById(id)
@@ -53,13 +53,13 @@ public class TransactionController {
         return ResponseEntity.ok(transaction);
     }
 
-    @Operation(summary = "Получить все транзакции")
+    @Operation(summary = "Get all transactions")
     @GetMapping("/all")
     public List<Transaction> getAllTransaction() {
         return transactionService.getAllTransactions();
     }
 
-    @Operation(summary = "Получить все транзакции для продавца по ID")
+    @Operation(summary = "Get all transactions for a seller by ID")
     @GetMapping("/seller/{id}/transactions")
     public List<Transaction> getAllSellerTransactions(@PathVariable Long id) {
         List<Transaction> transactions = transactionService.getAllTransactions();

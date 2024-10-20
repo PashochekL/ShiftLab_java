@@ -23,7 +23,7 @@ import java.util.List;
 public class SellerController {
     public final SellerService sellerService;
 
-    @Operation(summary = "Добавить нового продавца")
+    @Operation(summary = "Add a new seller")
     @PostMapping("/add")
     public ResponseEntity<Seller> addSeller(@RequestBody SellerDTO sellerDTO) {
         Seller seller = Seller.builder()
@@ -41,7 +41,7 @@ public class SellerController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedSeller);
     }
 
-    @Operation(summary = "Получить продавца по ID")
+    @Operation(summary = "Get seller by ID")
     @GetMapping("/{id}")
     public ResponseEntity<Seller> getSeller(@PathVariable Long id) {
         return sellerService.getSellerById(id)
@@ -49,25 +49,25 @@ public class SellerController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Получить всех продавцов")
+    @Operation(summary = "Get all sellers")
     @GetMapping("/all")
     public List<Seller> getAllSeller() {
         return sellerService.getAllSellers();
     }
 
-    @Operation(summary = "Получить самого продуктивного продавца")
+    @Operation(summary = "Get the most productive seller")
     @PostMapping("/mostProductive")
     public ResponseEntity<?> getMostProductiveSeller(@RequestBody PeriodFilterDTO filterRequest) {
         return sellerService.getMostProductiveSeller(filterRequest);
     }
 
-    @Operation(summary = "Получить продавцов с минимальной суммой")
+    @Operation(summary = "Get sellers with minimum amount")
     @PostMapping("/minAmount/{amount}")
     public ResponseEntity<?> getSellersWithMinAmount(@PathVariable Long amount, @RequestBody PeriodFilterDTO filterRequest) {
         return sellerService.getSellersWithMinAmount(amount, filterRequest);
     }
 
-    @Operation(summary = "Обновить информацию о продавце")
+    @Operation(summary = "Update seller information")
     @PutMapping("/update/{id}")
     public ResponseEntity<Seller> updateSeller(@PathVariable Long id, @RequestBody SellerDTO sellerSTO) {
         try {
@@ -78,7 +78,7 @@ public class SellerController {
         }
     }
 
-    @Operation(summary = "Удалить продавца")
+    @Operation(summary = "Delete a seller")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteSeller(@PathVariable Long id) {
         sellerService.deleteSeller(id);
