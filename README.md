@@ -43,7 +43,13 @@ jdbc:h2:mem:ShiftDB
 
 ## Тестирование:
 Тесты запускаются через консоль командой:
+
 ./gradlew test
+
 Для генерации отчета нужно использовать команду:
+
 ./gradlew jacocoTestReport
-отчет будет находиться в папке: build/reports/tests/test/index.html
+
+Отчет будет находиться в папке: 
+
+build/reports/tests/test/index.html
